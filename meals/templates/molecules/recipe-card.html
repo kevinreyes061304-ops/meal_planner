@@ -1,0 +1,25 @@
+<div class="card recipe-card h-100">
+    {% if recipe.image_url %}
+        <img src="{{ recipe.image_url }}" class="card-img-top" alt="{{ recipe.name }}" style="height: 200px; object-fit: cover;">
+    {% else %}
+        <div style="height: 200px; background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%); display: flex; align-items: center; justify-content: center; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+            {% include 'atoms/icon.html' with name='fa-utensils' color='white' size='3rem' %}
+        </div>
+    {% endif %}
+    <div class="card-body">
+        <h5 class="card-title">{{ recipe.name }}</h5>
+        <p class="card-text text-muted small">{{ recipe.description|truncatewords:15 }}</p>
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <small class="text-muted">
+                {% include 'atoms/icon.html' with name='fa-clock' %}
+                {{ recipe.prep_time|add:recipe.cook_time }} min
+            </small>
+            {% if recipe.is_popular %}
+                {% include 'atoms/badge.html' with text='Popular' style='warning' %}
+            {% endif %}
+        </div>
+        <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-primary btn-sm w-100">
+            {% include 'atoms/icon.html' with name='fa-eye' %} View Recipe
+        </a>
+    </div>
+</div>

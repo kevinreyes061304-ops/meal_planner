@@ -1,0 +1,89 @@
+{% extends 'meals/base.html' %}
+{% block title %}My Recipes{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <div class="d-flex justify-content-between align-items-center">
+        <div>
+            <h1>{% include 'atoms/icon.html' with name='fa-book' %} My Custom Recipes</h1>
+            <p class="mb-0">Manage your personal recipe collection</p>
+        </div>
+        <a href="{% url 'add_custom_recipe' %}" class="btn btn-primary">
+            {% include 'atoms/icon.html' with name='fa-plus' %} Add New Recipe
+        </a>
+    </div>
+</div>
+
+<!-- Meal Type Filter Buttons -->
+<div class="d-flex gap-2 mb-4 flex-wrap">
+    <a href="?meal_type=all" class="btn btn-outline-secondary {% if not request.GET.meal_type or request.GET.meal_type == 'all' %}active{% endif %}">
+        All Recipes
+    </a>
+    <a href="?meal_type=breakfast" class="btn btn-outline-secondary {% if request.GET.meal_type == 'breakfast' %}active{% endif %}">
+        🍳 Breakfast
+    </a>
+    <a href="?meal_type=lunch" class="btn btn-outline-secondary {% if request.GET.meal_type == 'lunch' %}active{% endif %}">
+        🍱 Lunch
+    </a>
+    <a href="?meal_type=dinner" class="btn btn-outline-secondary {% if request.GET.meal_type == 'dinner' %}active{% endif %}">
+        🍽️ Dinner
+    </a>
+    <a href="?meal_type=midnight_snack" class="btn btn-outline-secondary {% if request.GET.meal_type == 'midnight_snack' %}active{% endif %}">
+        🌙 Midnight Snack
+    </a>
+</div>
+
+{% if custom_recipes %}
+    <div class="row">
+        {% for recipe in custom_recipes %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                        <h5 class="card-title mb-0">{{ recipe.name }}</h5>
+                        <span class="badge bg-primary">{{ recipe.get_meal_type_display }}</span>
+                    </div>
+                    <p class="card-text text-muted">{{ recipe.description|truncatewords:20 }}</p>
+                    
+                    <div class="mb-3">
+                        {% if recipe.prep_time %}
+                            <small class="text-muted">
+                                {% include 'atoms/icon.html' with name='fa-clock' %} Prep: {{ recipe.prep_time }} min
+                            </small>
+                        {% endif %}
+                        {% if recipe.cook_time %}
+                            <small class="text-muted ms-2">
+                                {% include 'atoms/icon.html' with name='fa-fire' %} Cook: {{ recipe.cook_time }} min
+                            </small>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'recipe_detail' recipe.id %}" class="btn btn-sm btn-outline-primary">
+                            {% include 'atoms/icon.html' with name='fa-eye' %} View
+                        </a>
+                        <form method="post" action="{% url 'delete_custom_recipe' recipe.id %}" style="display: inline;" onsubmit="return confirm('Delete this recipe?');">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                {% include 'atoms/icon.html' with name='fa-trash' %} Delete
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-info text-center">
+        <h5>{% include 'atoms/icon.html' with name='fa-info-circle' %} No Custom Recipes Yet</h5>
+        <p>You haven't created any custom recipes yet. Click the button above to add your first recipe!</p>
+    </div>
+{% endif %}
+
+<div class="text-center mt-4">
+    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+        {% include 'atoms/icon.html' with name='fa-arrow-left' %} Back to Dashboard
+    </a>
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% comment %}
+Usage: {% include 'organisms/comment-section.html' with comments=comment_queryset %}
+Parameters:
+  - comments: QuerySet or list of Comment objects (required)
+{% endcomment %}
+{% if comments %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h3 class="mb-3">
+            {% include 'atoms/icon.html' with name='fa-comment-dots' %}
+            Important Notes
+        </h3>
+        {% for comment in comments %}
+            {% include 'molecules/comment-box.html' with comment=comment %}
+        {% endfor %}
+        <a href="{% url 'add_comment' %}" class="btn btn-outline-primary">
+            {% include 'atoms/icon.html' with name='fa-plus' %} Add New Note
+        </a>
+    </div>
+</div>
+{% else %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body text-center">
+                {% include 'atoms/icon.html' with name='fa-comment-medical' color='var(--primary-green)' size='3rem' %}
+                <p class="mb-3 mt-3">Add important notes about allergies, preferences, or meal planning tips!</p>
+                <a href="{% url 'add_comment' %}" class="btn btn-primary">
+                    {% include 'atoms/icon.html' with name='fa-plus' %} Add Your First Note
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

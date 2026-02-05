@@ -1,0 +1,39 @@
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'dashboard' %}">
+            {% include 'atoms/icon.html' with name='fa-utensils' %} Meal Planner
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dashboard' %}">
+                        {% include 'atoms/icon.html' with name='fa-home' %} Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'edit_weekly_plan' %}">
+                        {% include 'atoms/icon.html' with name='fa-calendar-week' %} Weekly Plan
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'my_recipes' %}">
+                        <i class="fas fa-book"></i> My Recipes
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'edit_profile' %}">
+                        {% include 'atoms/icon.html' with name='fa-user' %} Profile
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">
+                        {% include 'atoms/icon.html' with name='fa-sign-out-alt' %} Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>

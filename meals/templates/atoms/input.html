@@ -1,0 +1,11 @@
+{% comment %}
+Usage: {% include 'atoms/input.html' with field=form.field_name %}
+{% endcomment %}
+{{ field }}
+{% if field.errors %}
+    <div class="text-danger small mt-1">
+        {% for error in field.errors %}
+            {{ error }}
+        {% endfor %}
+    </div>
+{% endif %}

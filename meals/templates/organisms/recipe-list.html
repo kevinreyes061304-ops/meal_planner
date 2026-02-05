@@ -1,0 +1,27 @@
+{% comment %}
+Usage: {% include 'organisms/recipe-list.html' with recipes=recipe_queryset %}
+Parameters:
+  - recipes: QuerySet or list of Recipe objects (required)
+{% endcomment %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h3 class="mb-3">
+            {% include 'atoms/icon.html' with name='fa-fire' %}
+            Popular Recipes
+        </h3>
+    </div>
+    
+    {% if recipes %}
+        {% for recipe in recipes %}
+        <div class="col-md-4 mb-3">
+            {% include 'molecules/recipe-card.html' with recipe=recipe %}
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="col-12">
+            <div class="alert alert-info">
+                No popular recipes available at the moment.
+            </div>
+        </div>
+    {% endif %}
+</div>

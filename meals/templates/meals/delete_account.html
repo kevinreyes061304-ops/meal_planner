@@ -1,0 +1,69 @@
+{% extends 'meals/base.html' %}
+{% block title %}Delete Account{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-8 col-lg-6">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h4 class="mb-0">
+                    {% include 'atoms/icon.html' with name='fa-exclamation-triangle' %} Delete Account
+                </h4>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-danger">
+                    <h5 class="alert-heading">
+                        {% include 'atoms/icon.html' with name='fa-exclamation-circle' %} Warning!
+                    </h5>
+                    <p class="mb-0">
+                        This action is <strong>permanent and cannot be undone</strong>. All your data will be deleted including:
+                    </p>
+                    <ul class="mt-2 mb-0">
+                        <li>Your meal plans and history</li>
+                        <li>Your notes and comments</li>
+                        <li>Your profile information</li>
+                        <li>All saved preferences</li>
+                    </ul>
+                </div>
+
+                <h5 class="mt-4 mb-3">Are you absolutely sure?</h5>
+                <p class="text-muted">Please enter your password to confirm account deletion.</p>
+
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-4">
+                        <label for="password" class="form-label">
+                            {% include 'atoms/icon.html' with name='fa-lock' %} Password
+                        </label>
+                        <input type="password" 
+                               class="form-control form-control-lg" 
+                               id="password" 
+                               name="password" 
+                               placeholder="Enter your password to confirm"
+                               required>
+                    </div>
+
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            {% include 'atoms/icon.html' with name='fa-trash-alt' %} Yes, Delete My Account Permanently
+                        </button>
+                        <a href="{% url 'edit_profile' %}" class="btn btn-secondary btn-lg">
+                            {% include 'atoms/icon.html' with name='fa-arrow-left' %} No, Keep My Account
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="text-muted">
+                <small>
+                    {% include 'atoms/icon.html' with name='fa-info-circle' %}
+                    Need help? Contact support instead of deleting your account.
+                </small>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

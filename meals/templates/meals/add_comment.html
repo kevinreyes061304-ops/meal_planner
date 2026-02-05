@@ -1,0 +1,32 @@
+{% extends 'meals/base.html' %}
+{% block title %}Add Note{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% include 'atoms/icon.html' with name='fa-comment-medical' %} Add Important Note</h1>
+    <p class="mb-0">Save important information about your meal planning</p>
+</div>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    {% include 'molecules/form-group.html' with field=form.content label='Note Content' icon='fa-edit' %}
+                    <div class="mb-4 form-check">
+                        {{ form.is_important }}
+                        <label class="form-check-label" for="{{ form.is_important.id_for_label }}">
+                            Mark as important (will be displayed on dashboard)
+                        </label>
+                    </div>
+                    <div class="text-center">
+                        {% include 'atoms/button.html' with text='Save Note' icon='fa-save' type='submit' style='primary' class='btn-lg me-2' %}
+                        <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary btn-lg">
+                            {% include 'atoms/icon.html' with name='fa-times' %} Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

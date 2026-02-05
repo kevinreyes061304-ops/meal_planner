@@ -1,0 +1,21 @@
+{% extends 'meals/base.html' %}
+{% block title %}Today's Meal Plan{% endblock %}
+{% block content %}
+<div class="page-header">
+    <div class="row align-items-center">
+        <div class="col-md-8">
+            <h1>{% include 'atoms/icon.html' with name='fa-calendar-day' %} Today's Meal Plan</h1>
+            <p class="mb-0">{{ today|date:"l, F d, Y" }}</p>
+        </div>
+        <div class="col-md-4 text-end">
+            <a href="{% url 'edit_weekly_plan' %}" class="btn btn-light btn-lg">
+                {% include 'atoms/icon.html' with name='fa-edit' %} Edit Weekly Plan
+            </a>
+        </div>
+    </div>
+</div>
+{% include 'organisms/profile-info.html' with user_profile=user_profile %}
+{% include 'organisms/meal-section.html' with meals=meals %}
+{% include 'organisms/recipe-list.html' with recipes=popular_recipes %}
+{% include 'organisms/comment-section.html' with comments=recent_comments %}
+{% endblock %}

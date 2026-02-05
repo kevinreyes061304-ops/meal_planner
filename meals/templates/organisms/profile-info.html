@@ -1,0 +1,40 @@
+{% comment %}
+Usage: {% include 'organisms/profile-info.html' with user_profile=user_profile_object %}
+Parameters:
+  - user_profile: UserProfile object (required)
+{% endcomment %}
+{% if user_profile.allergies or user_profile.preferences %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card" style="background: linear-gradient(135deg, #fff8e1 0%, #ffecb3 100%); border-left: 4px solid #ffa726;">
+            <div class="card-body">
+                <h5 class="card-title">
+                    {% include 'atoms/icon.html' with name='fa-info-circle' %}
+                    Important Information
+                    <a href="{% url 'edit_profile' %}" class="btn btn-sm btn-outline-dark float-end">
+                        {% include 'atoms/icon.html' with name='fa-edit' %} Edit
+                    </a>
+                </h5>
+                {% if user_profile.allergies %}
+                <p class="mb-2">
+                    <strong>
+                        {% include 'atoms/icon.html' with name='fa-exclamation-triangle' color='#dc3545' %}
+                        Allergies:
+                    </strong> 
+                    {{ user_profile.allergies }}
+                </p>
+                {% endif %}
+                {% if user_profile.preferences %}
+                <p class="mb-0">
+                    <strong>
+                        {% include 'atoms/icon.html' with name='fa-heart' color='#28a745' %}
+                        Preferences:
+                    </strong> 
+                    {{ user_profile.preferences }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}

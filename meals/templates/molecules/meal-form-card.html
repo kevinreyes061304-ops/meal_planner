@@ -1,0 +1,42 @@
+<div class="p-3" style="background: #fff8e1; border-radius: 10px; border-left: 4px solid #ffd54f;">
+    <h6 class="mb-2">
+        {% include 'atoms/icon.html' with name='fa-mug-hot' color='#ffd54f' %}
+        Breakfast
+    </h6>
+    <!-- form fields here -->
+</div>
+    
+    <!-- Meal type header -->
+    <h6 class="mb-2">
+        {% include 'atoms/icon.html' with name=icon color=color %}
+        {{ title }}
+    </h6>
+    
+    <!-- Hidden fields for date and meal_type -->
+    {{ form.date }}
+    {{ form.meal_type }}
+    
+    <!-- Recipe selection dropdown -->
+    <div class="mb-2">
+        {{ form.recipe }}
+        {% if form.recipe.errors %}
+            <div class="text-danger small">{{ form.recipe.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <!-- Custom meal text input -->
+    <div class="mb-2">
+        {{ form.custom_meal }}
+        {% if form.custom_meal.errors %}
+            <div class="text-danger small">{{ form.custom_meal.errors }}</div>
+        {% endif %}
+    </div>
+    
+    <!-- Notes textarea -->
+    <div class="mb-0">
+        {{ form.notes }}
+        {% if form.notes.errors %}
+            <div class="text-danger small">{{ form.notes.errors }}</div>
+        {% endif %}
+    </div>
+</div>

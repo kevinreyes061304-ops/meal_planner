@@ -1,0 +1,65 @@
+{% extends 'meals/base.html' %}
+{% block title %}{{ recipe.name }}{% endblock %}
+{% block content %}
+<div class="page-header">
+    <h1>{% include 'atoms/icon.html' with name='fa-book-open' %} {{ recipe.name }}</h1>
+    {% if recipe.is_popular %}
+        {% include 'atoms/badge.html' with text='Popular Recipe' style='warning' %}
+    {% endif %}
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div class="card mb-4">
+            {% if recipe.image_url %}
+                <img src="{{ recipe.image_url }}" class="card-img-top" alt="{{ recipe.name }}" style="max-height: 400px; object-fit: cover;">
+            {% endif %}
+            <div class="card-body">
+                <h4>Description</h4>
+                <p>{{ recipe.description }}</p>
+                <hr>
+                <h4>{% include 'atoms/icon.html' with name='fa-shopping-basket' %} Ingredients</h4>
+                <div style="white-space: pre-line;">{{ recipe.ingredients }}</div>
+                <hr>
+                <h4>{% include 'atoms/icon.html' with name='fa-list-ol' %} Instructions</h4>
+                <div style="white-space: pre-line;">{{ recipe.instructions }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5>{% include 'atoms/icon.html' with name='fa-info-circle' %} Recipe Info</h5>
+                <hr>
+                <p class="mb-2">{% include 'atoms/icon.html' with name='fa-clock' color='#007bff' %} <strong>Prep Time:</strong> {{ recipe.prep_time }} min</p>
+                <p class="mb-2">{% include 'atoms/icon.html' with name='fa-fire' color='#dc3545' %} <strong>Cook Time:</strong> {{ recipe.cook_time }} min</p>
+                <p class="mb-2">{% include 'atoms/icon.html' with name='fa-users' color='#28a745' %} <strong>Servings:</strong> {{ recipe.servings }}</p>
+                <p class="mb-0">{% include 'atoms/icon.html' with name='fa-star' color='#ffc107' %} <strong>Popularity:</strong> {{ recipe.popularity_score }}</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h5>{% include 'atoms/icon.html' with name='fa-plus-circle' %} Add to Plan</h5>
+                <hr>
+                <form method="post" action="{% url 'add_meal_to_plan' recipe.id %}">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Select Meal Type:</label>
+                        <select name="meal_type" class="form-control" required>
+                            <option value="">Choose...</option>
+                            <option value="breakfast">🌅 Breakfast</option>
+                            <option value="lunch">🍔 Lunch</option>
+                            <option value="dinner">🍽️ Dinner</option>
+                            <option value="midnight_snack">🌙 Midnight Snack</option>
+                        </select>
+                    </div>
+                    {% include 'atoms/button.html' with text='Add to Today' icon='fa-calendar-plus' type='submit' style='primary' class='w-100' %}
+                </form>
+                <hr>
+                <a href="{% url 'dashboard' %}" class="btn btn-outline-secondary w-100">
+                    {% include 'atoms/icon.html' with name='fa-arrow-left' %} Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

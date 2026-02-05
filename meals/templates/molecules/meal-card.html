@@ -1,0 +1,24 @@
+<div class="card meal-card type-lunch" style="border-left: 5px solid green;">
+<div class="card-body">
+        <h5 class="card-title">
+            {% include 'atoms/icon.html' with name=icon color=color size='2rem' %}
+            {{ title }}
+        </h5>
+        {% if meal %}
+            <h6 class="text-dark">
+                {% if meal.recipe %}
+                    {{ meal.recipe.name }}
+                {% else %}
+                    {{ meal.custom_meal }}
+                {% endif %}
+            </h6>
+            {% if meal.notes %}
+                <p class="text-muted small mb-0">{{ meal.notes }}</p>
+            {% endif %}
+        {% else %}
+            <div class="empty-meal">
+                <p class="mb-0">No meal planned</p>
+            </div>
+        {% endif %}
+    </div>
+</div>

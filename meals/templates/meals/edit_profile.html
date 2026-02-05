@@ -1,0 +1,162 @@
+{% extends 'meals/base.html' %}
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h1>
+        {% include 'atoms/icon.html' with name='fa-user-edit' %} Edit Profile
+    </h1>
+    <p class="mb-0">Manage your account settings and preferences</p>
+</div>
+
+<div class="row">
+    <!-- Account Information -->
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header" style="background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%); color: white;">
+                <h5 class="mb-0">
+                    {% include 'atoms/icon.html' with name='fa-user' %} Account Information
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        {{ user_form.username }}
+                        {% if user_form.username.errors %}
+                            <div class="text-danger small">{{ user_form.username.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">{{ user_form.fields.username.help_text }}</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email</label>
+                        {{ user_form.email }}
+                        {% if user_form.email.errors %}
+                            <div class="text-danger small">{{ user_form.email.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="id_first_name" class="form-label">First Name</label>
+                            {{ user_form.first_name }}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="id_last_name" class="form-label">Last Name</label>
+                            {{ user_form.last_name }}
+                        </div>
+                    </div>
+                    
+                    <h6 class="mt-4 mb-3">Dietary Information</h6>
+                    
+                    <div class="mb-3">
+                        <label for="id_allergies" class="form-label">
+                            {% include 'atoms/icon.html' with name='fa-exclamation-triangle' color='#dc3545' %} Food Allergies
+                        </label>
+                        {{ profile_form.allergies }}
+                        <small class="form-text text-muted">{{ profile_form.fields.allergies.help_text }}</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_preferences" class="form-label">
+                            {% include 'atoms/icon.html' with name='fa-heart' color='#28a745' %} Dietary Preferences
+                        </label>
+                        {{ profile_form.preferences }}
+                        <small class="form-text text-muted">{{ profile_form.fields.preferences.help_text }}</small>
+                    </div>
+                    
+                    <button type="submit" name="update_info" class="btn btn-primary">
+                        {% include 'atoms/icon.html' with name='fa-save' %} Save Changes
+                    </button>
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary">
+                        {% include 'atoms/icon.html' with name='fa-times' %} Cancel
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Change Password -->
+    <div class="col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header" style="background: linear-gradient(135deg, var(--accent-red) 0%, #ef5350 100%); color: white;">
+                <h5 class="mb-0">
+                    {% include 'atoms/icon.html' with name='fa-lock' %} Change Password
+                </h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <div class="mb-3">
+                        <label for="id_old_password" class="form-label">Current Password</label>
+                        {{ password_form.old_password }}
+                        {% if password_form.old_password.errors %}
+                            <div class="text-danger small">{{ password_form.old_password.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_new_password1" class="form-label">New Password</label>
+                        {{ password_form.new_password1 }}
+                        {% if password_form.new_password1.errors %}
+                            <div class="text-danger small">{{ password_form.new_password1.errors }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Your password must contain at least 8 characters and can't be too common.
+                        </small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="id_new_password2" class="form-label">Confirm New Password</label>
+                        {{ password_form.new_password2 }}
+                        {% if password_form.new_password2.errors %}
+                            <div class="text-danger small">{{ password_form.new_password2.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <button type="submit" name="change_password" class="btn btn-danger">
+                        {% include 'atoms/icon.html' with name='fa-key' %} Change Password
+                    </button>
+                </form>
+                
+                <div class="alert alert-info mt-3 mb-0">
+                    {% include 'atoms/icon.html' with name='fa-info-circle' %}
+                    <strong>Note:</strong> Changing your password will not log you out of other devices.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DANGER ZONE - DELETE ACCOUNT -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card border-danger">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">
+                    {% include 'atoms/icon.html' with name='fa-exclamation-triangle' %} Danger Zone
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row align-items-center">
+                    <div class="col-md-8">
+                        <h6 class="mb-1">Delete Account</h6>
+                        <p class="text-muted mb-md-0">
+                            Permanently delete your account and all associated data. This action cannot be undone.
+                        </p>
+                    </div>
+                    <div class="col-md-4 text-md-end">
+                        <a href="{% url 'delete_account' %}" class="btn btn-outline-danger">
+                            {% include 'atoms/icon.html' with name='fa-trash-alt' %} Delete Account
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

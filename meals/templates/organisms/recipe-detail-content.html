@@ -1,0 +1,36 @@
+<div class="card mb-4">
+    <!-- Recipe Image (if available) -->
+    {% if recipe.image_url %}
+        <img src="{{ recipe.image_url }}" 
+             class="card-img-top" 
+             alt="{{ recipe.name }}" 
+             style="max-height: 400px; object-fit: cover; border-top-left-radius: 15px; border-top-right-radius: 15px;">
+    {% endif %}
+    
+    <div class="card-body">
+        <!-- Description Section -->
+        <h4 class="mb-3">
+            {% include 'atoms/icon.html' with name='fa-align-left' %}
+            Description
+        </h4>
+        <p class="mb-4">{{ recipe.description }}</p>
+        
+        <hr>
+        
+        <!-- Ingredients Section -->
+        <h4 class="mb-3">
+            {% include 'atoms/icon.html' with name='fa-shopping-basket' %}
+            Ingredients
+        </h4>
+        <div style="white-space: pre-line;" class="mb-4">{{ recipe.ingredients }}</div>
+        
+        <hr>
+        
+        <!-- Instructions Section -->
+        <h4 class="mb-3">
+            {% include 'atoms/icon.html' with name='fa-list-ol' %}
+            Instructions
+        </h4>
+        <div style="white-space: pre-line;">{{ recipe.instructions }}</div>
+    </div>
+</div>

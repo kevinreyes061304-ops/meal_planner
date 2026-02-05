@@ -1,0 +1,33 @@
+{% comment %}
+Usage: {% include 'organisms/meal-section.html' with meals=meals_dict %}
+Parameters:
+  - meals: Dictionary with keys: breakfast, lunch, dinner, midnight_snack (required)
+{% endcomment %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h3 class="mb-3">
+            {% include 'atoms/icon.html' with name='fa-plate-wheat' %}
+            Today's Meals
+        </h3>
+    </div>
+    
+    <!-- Breakfast -->
+    <div class="col-md-6 mb-3">
+        {% include 'molecules/meal-card.html' with meal=meals.breakfast meal_type='breakfast' title='Breakfast' icon='fa-mug-hot' color='#ffd54f' %}
+    </div>
+    
+    <!-- Lunch -->
+    <div class="col-md-6 mb-3">
+        {% include 'molecules/meal-card.html' with meal=meals.lunch meal_type='lunch' title='Lunch' icon='fa-hamburger' color='#ff9800' %}
+    </div>
+    
+    <!-- Dinner -->
+    <div class="col-md-6 mb-3">
+        {% include 'molecules/meal-card.html' with meal=meals.dinner meal_type='dinner' title='Dinner' icon='fa-drumstick-bite' color='#e57373' %}
+    </div>
+    
+    <!-- Midnight Snack -->
+    <div class="col-md-6 mb-3">
+        {% include 'molecules/meal-card.html' with meal=meals.midnight_snack meal_type='midnight_snack' title='Midnight Snack' icon='fa-moon' color='#9c27b0' %}
+    </div>
+</div>

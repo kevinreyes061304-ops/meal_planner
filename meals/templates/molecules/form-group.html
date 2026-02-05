@@ -1,0 +1,7 @@
+<div class="mb-3">
+    {% include 'atoms/label.html' with text=label icon=icon required=required for_id=field.id_for_label %}
+    {% include 'atoms/input.html' with field=field %}
+    {% if help_text %}
+        <small class="form-text text-muted">{{ help_text }}</small>
+    {% endif %}
+</div>
