@@ -74,29 +74,21 @@ WSGI_APPLICATION = 'meal_planner.wsgi.application'
 
 # Default SQLite configuration (data won't persist on Vercel serverless)
 # For production, use PostgreSQL with DATABASE_URL environment variable
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/tmp/db.sqlite3',  # Use /tmp for Vercel serverless
+    }
+}
 
 # Uncomment and configure for PostgreSQL (recommended for production)
-from pathlib import Path
-import os
-import dj_database_url
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-DATABASE_URL = os.getenv("DATABASE_URL")
-
-if DATABASE_URL:
-    DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL)
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
-        }
-    }
-
+# import dj_database_url
+# DATABASES = {
+#     'default': dj_database_url.config(
+#         default=os.environ.get('DATABASE_URL'),
+#         conn_max_age=600
+#     )
+# }
 
 
 # Password validation
@@ -134,10 +126,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles_build', 'static')
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'staticfiles'),
-]
+
+# For Vercel, we'll serve static files directly from the staticfiles directory
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Media files
 MEDIA_URL = '/media/'
