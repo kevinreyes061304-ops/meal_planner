@@ -74,21 +74,23 @@ WSGI_APPLICATION = 'meal_planner.wsgi.application'
 
 # Default SQLite configuration (data won't persist on Vercel serverless)
 # For production, use PostgreSQL with DATABASE_URL environment variable
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.sqlite3',
+#        'NAME': '/tmp/db.sqlite3',  # Use /tmp for Vercel serverless
+#    }
+#}
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/tmp/db.sqlite3',  # Use /tmp for Vercel serverless
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'mealplanner',
+        'USER': 'postgres',
+        'PASSWORD': 'june13po',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
-# Uncomment and configure for PostgreSQL (recommended for production)
-# import dj_database_url
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default=os.environ.get('DATABASE_URL'),
-#         conn_max_age=600
-#     )
-# }
 
 
 # Password validation
