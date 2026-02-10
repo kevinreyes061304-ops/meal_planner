@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 
 
-
 class UserProfile(models.Model):
     """
     User Profile Model
@@ -38,13 +37,9 @@ class Recipe(models.Model):
         ('lunch', 'Lunch'),
         ('dinner', 'Dinner'),
         ('midnight_snack', 'Midnight Snack'),
-        ('any', 'Any Meal'),  # For recipes that work for multiple meals
+        ('any', 'Any Meal'),
     ]
     
-    """
-    Recipe Model
-    Stores recipe information including ingredients, instructions, and metadata
-    """
     name = models.CharField(max_length=200, db_index=True)
     description = models.TextField()
     ingredients = models.TextField(help_text="List ingredients line by line")
@@ -67,15 +62,7 @@ class Recipe(models.Model):
         default=0, 
         help_text="Higher score = higher ranking"
     )
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, related_name='custom_recipes')  # ADD THIS
-    def __str__(self):
-        return self.name
-
-    class Meta:
-        ordering = ['name']
-
     image_url = models.URLField(blank=True, null=True, help_text="Recipe image URL")
-    
     created_by = models.ForeignKey(
         User, 
         on_delete=models.SET_NULL, 
@@ -186,18 +173,3 @@ class Comment(models.Model):
     def __str__(self):
         preview = self.content[:50] + '...' if len(self.content) > 50 else self.content
         return f"{self.user.username} - {preview}"
-    
-    class UserProfile(models.Model):
-        user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-        allergies = models.TextField(blank=True, help_text="List your food allergies")
-        preferences = models.TextField(blank=True, help_text="Your dietary preferences")
-        description = models.TextField(blank=True, help_text="Tell us about yourself")  # Make sure this line exists
-        created_at = models.DateTimeField(auto_now_add=True)
-        updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return f"{self.user.username}'s Profile"
-
-    class Meta:
-        verbose_name = "User Profile"
-        verbose_name_plural = "User Profiles"
