@@ -4,6 +4,7 @@ Django settings for meal_planner project - Vercel Deployment Version
 
 from pathlib import Path
 import os
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -72,25 +73,31 @@ WSGI_APPLICATION = 'meal_planner.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# Default SQLite configuration (data won't persist on Vercel serverless)
-# For production, use PostgreSQL with DATABASE_URL environment variable
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': '/tmp/db.sqlite3',  # Use /tmp for Vercel serverless
-#    }
-#}
+# Use DATABASE_URL from environment variable (Neon/Vercel)
+# Falls back to local PostgreSQL for development
+DATABASE_URL = os.environ.get('DATABASE_URL')
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'mealplanner',
-        'USER': 'postgres',
-        'PASSWORD': 'june13po',
-        'HOST': 'localhost',
-        'PORT': '5432',
+if DATABASE_URL:
+    # Production: Use Neon database via DATABASE_URL
+    DATABASES = {
+        'default': dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            conn_health_checks=True,
+        )
     }
-}
+else:
+    # Local development: Use local PostgreSQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'mealplanner',
+            'USER': 'postgres',
+            'PASSWORD': 'june13po',
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
 
 
 # Password validation
